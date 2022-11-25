@@ -1,5 +1,6 @@
 #include "crg.hpp"
 
+
 int main(int argc, char *argv[])
 {
 	crg::init();
@@ -9,6 +10,9 @@ int main(int argc, char *argv[])
 	//creating player car
 	tt_vec3 player_pos = {0.0f, 0.0f, 0.0f};
 	crg::car car(true, player_pos, assets);
+
+	tt_vec3 npc_pos = {-1.5f, 0.0f, 6.0f};
+	crg::npc npc(npc_pos, assets);
 
 	crg::track track(assets);
 
