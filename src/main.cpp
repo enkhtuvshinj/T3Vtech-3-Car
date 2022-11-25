@@ -10,6 +10,8 @@ int main(int argc, char *argv[])
 	tt_vec3 player_pos = {0.0f, 0.0f, 0.0f};
 	crg::car car(true, player_pos, assets);
 
+	crg::track track(assets);
+
     tt_vec3 light_col={0.5f, 0.3f, 0.03f};
     tt_vec3 light_pos={-20.0f, 10.0f, -50.0f};
     tt_point_light light=tt_point_light_new();
