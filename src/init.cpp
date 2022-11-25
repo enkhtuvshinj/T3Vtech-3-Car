@@ -1,4 +1,5 @@
 #include "crg.hpp"
+extern bool tt_frustum_culling_trigger;
 
 void crg::init()
 {
@@ -7,4 +8,5 @@ void crg::init()
 	//setting general lighting properties
 	tt_gfx_gouraud_shading(true);
 	tt_gfx_phong_shading(false);
+	tt_frustum_culling_trigger=false; //some slight hack
 }

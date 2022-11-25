@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
 
 	while(!tt_input_keyboard_key_press(TT_KEY_ESC))
 	{
+		car.update();
 		tt_new_frame();
 	}
 

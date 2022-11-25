@@ -15,6 +15,7 @@ namespace crg
 
 			//textures
 			tt_3d_texture *track_tex = NULL;
+			tt_3d_texture *car_tex = NULL;
 
 			assets();
 			~assets() {};
@@ -39,10 +40,12 @@ namespace crg
 			tt_vec3 m_vel = {0.0f, 0.0f, 0.0f};
 			tt_vec3 m_acc = {0.0f, 0.0f, 0.0f};
 			tt_vec3 m_rot = {0.0f, 0.0f, 0.0f};
+			tt_vec3 m_dir = {0.0f, 0.0f, -1.0f}; //initial orientation
 
 		public:
 			bool m_is_player;
 			car(bool is_player, tt_vec3& pos, crg::assets& assets);
 			~car();
+			void update();
 	};
 }
