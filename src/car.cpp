@@ -1,6 +1,6 @@
 #include "crg.hpp"
 
-#define CAR_ACC 1.3f
+#define CAR_ACC 3.0f
 #define CAR_ROT 0.6f
 
 crg::car::car(bool is_player, tt_vec3& pos, crg::assets& assets)
@@ -27,8 +27,6 @@ void crg::car::update()
 	m_pos = tt_math_vec3_add(&m_pos, &pos_delta);
 	tt_3d_object_set_position(m_obj, &m_pos);
 
-	printf("%f %f %f\n", m_vel.x, m_vel.y, m_vel.z);
-
 	if(m_is_player)
 	{
 		//accelerating the car
@@ -42,7 +40,6 @@ void crg::car::update()
 			}
 			else
 			{
-				printf("X\n");
 				m_acc = tt_math_vec3_mul_float(&m_acc, -CAR_ACC);
 			}
 		}
@@ -51,7 +48,7 @@ void crg::car::update()
 			if(tt_math_vec3_length(&m_vel) > 0.0f)
 			{
 				m_acc = tt_math_vec3_normalize(&m_vel);
-				m_acc = tt_math_vec3_mul_float(&m_acc, -3.0f);				
+				m_acc = tt_math_vec3_mul_float(&m_acc, -5.0f);				
 			}
 			if(	tt_math_vec3_length(&m_vel) < 0.01f)
 			{
