@@ -112,3 +112,9 @@ void crg::car::get_position(tt_vec3* pos_out) {
     pos_out->z = m_pos.z;
 }
 
+void crg::car::set_at_starting_position(unsigned int place, crg::track& track)
+{
+	m_pos = track.get_finish_pos();
+	m_pos.z += place * 15.0f;
+	m_pos.x += place%2 * 10.0f;
+}

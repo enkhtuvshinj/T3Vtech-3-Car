@@ -6,15 +6,16 @@ int main(int argc, char *argv[])
 	crg::init();
 
 	crg::assets assets;
+	crg::track track(assets);
 
 	//creating player car
 	tt_vec3 player_pos = {0.0f, 0.0f, 0.0f};
 	crg::car car(true, player_pos, assets);
+	car.set_at_starting_position(2, track);
 
 	tt_vec3 npc_pos = {-1.5f, 0.0f, 6.0f};
 	crg::car npc(false, npc_pos, assets);
-
-	crg::track track(assets);
+	npc.set_at_starting_position(1, track);
 
 	tt_vec3 light_col={0.5f, 0.3f, 0.03f};
 	tt_vec3 light_pos={-20.0f, 10.0f, -50.0f};

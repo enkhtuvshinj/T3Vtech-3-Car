@@ -37,10 +37,12 @@ namespace crg
 			tt_3d_object *m_finish = NULL;
 			std::vector<tt_3d_object*> m_fence;
 			std::vector<tt_3d_object*> m_trees;
+			tt_vec3 m_finish_pos = {-143.0f, 0.0f, 0.0f};
 
 		public:
 			track(crg::assets& assets);
 			~track() {};
+			tt_vec3 get_finish_pos() {return m_finish_pos;};
 	};
 
 	class car
@@ -60,6 +62,7 @@ namespace crg
 			~car();
 			void update();
 			void get_position(tt_vec3* pos_out);
+			void set_at_starting_position(unsigned int place, crg::track& track);
 	};
 
     // Guide cube for the NPC to reach in a straight line.

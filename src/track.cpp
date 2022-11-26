@@ -18,8 +18,7 @@ crg::track::track(crg::assets& assets)
 
 	//finish/starting line
 	m_finish = tt_3d_object_new();
-	tt_vec3 finish_pos = {-143.0f, 0.0f, 0.0f};
-	tt_3d_object_set_position(m_finish, &finish_pos);
+	tt_3d_object_set_position(m_finish, &m_finish_pos);
 	tt_3d_object_use_texture(m_finish, assets.finish_tex);
 	tt_3d_object_use_custom_model(m_finish, assets.finish_mesh);
 
