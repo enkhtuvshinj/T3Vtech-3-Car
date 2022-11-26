@@ -3,11 +3,10 @@
 #define CAR_ACC 3.0f
 #define CAR_ROT 0.6f
 
-crg::car::car(bool is_player, tt_vec3& pos, crg::assets& assets)
+crg::car::car(unsigned int place, bool is_player, crg::assets& assets)
 {
 	m_is_player = is_player;
-	m_pos = pos;
-
+	m_place = place; 
 	m_obj = tt_3d_object_new();
 
 	//player
@@ -112,9 +111,9 @@ void crg::car::get_position(tt_vec3* pos_out) {
     pos_out->z = m_pos.z;
 }
 
-void crg::car::set_at_starting_position(unsigned int place, crg::track& track)
+void crg::car::set_at_starting_position(crg::track& track)
 {
 	m_pos = track.get_finish_pos();
-	m_pos.z += place * 15.0f;
-	m_pos.x += place%2 * 10.0f;
+	m_pos.z += m_place * 15.0f;
+	m_pos.x += m_place%2 * 10.0f;
 }

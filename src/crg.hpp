@@ -55,14 +55,15 @@ namespace crg
 			tt_vec3 m_acc = {0.0f, 0.0f, 0.0f};
 			tt_vec3 m_rot = {0.0f, 0.0f, 0.0f};
 			tt_vec3 m_dir = {0.0f, 0.0f, -1.0f}; //initial orientation
+			unsigned int m_place;
 
 		public:
 			bool m_is_player;
-			car(bool is_player, tt_vec3& pos, crg::assets& assets);
+			car(unsigned int place, bool is_player, crg::assets& assets);
 			~car();
 			void update();
 			void get_position(tt_vec3* pos_out);
-			void set_at_starting_position(unsigned int place, crg::track& track);
+			void set_at_starting_position(crg::track& track);
 	};
 
     // Guide cube for the NPC to reach in a straight line.

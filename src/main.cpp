@@ -1,5 +1,6 @@
 #include "crg.hpp"
 
+#define NUM_NPC 7
 
 int main(int argc, char *argv[])
 {
@@ -9,13 +10,17 @@ int main(int argc, char *argv[])
 	crg::track track(assets);
 
 	//creating player car
-	tt_vec3 player_pos = {0.0f, 0.0f, 0.0f};
-	crg::car car(true, player_pos, assets);
-	car.set_at_starting_position(2, track);
+	crg::car car(NUM_NPC+1, true, assets);
+	car.set_at_starting_position(track);
 
-	tt_vec3 npc_pos = {-1.5f, 0.0f, 6.0f};
-	crg::car npc(false, npc_pos, assets);
-	npc.set_at_starting_position(1, track);
+	//create NPCs
+	std::vector<crg::car> npc;
+	for(int i = 0; i<NUM_NPC; i++)
+	{
+		crg::car tmp_npc(i+1, false, assets);
+		tmp_npc.set_at_starting_position(track);
+		npc.emplace_back(tmp_npc);
+	}
 
 	tt_vec3 light_col={0.5f, 0.3f, 0.03f};
 	tt_vec3 light_pos={-20.0f, 10.0f, -50.0f};
@@ -44,7 +49,10 @@ int main(int argc, char *argv[])
 	while(!tt_input_keyboard_key_press(TT_KEY_ESC))
 	{
 		car.update();
-		npc.update();
+		for(int i = 0; i<npc.size(); i++)
+		{
+			npc[i].update();
+		}
 
 		car.get_position(&pos);
 		pos.y = 280.0f;
