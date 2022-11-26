@@ -50,22 +50,5 @@ namespace crg
 			~car();
 			void update();
 	};
-
-    // TODO: We merge this with car later?
-	class npc
-	{
-		private:
-			tt_3d_object *m_obj = NULL;
-			tt_3d_custom_model *m_mesh = NULL;
-			tt_vec3 m_pos = {0.0f, 0.0f, 0.0f};
-			tt_vec3 m_vel = {0.0f, 0.0f, 0.0f};
-			tt_vec3 m_acc = {0.0f, 0.0f, 0.0f};
-			tt_vec3 m_rot = {0.0f, 0.0f, 0.0f};
-
-		public:
-			npc(tt_vec3& pos, crg::assets& assets);
-			~npc();
-			void update();
-	};
 }
 

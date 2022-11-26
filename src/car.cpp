@@ -9,9 +9,22 @@ crg::car::car(bool is_player, tt_vec3& pos, crg::assets& assets)
 	m_pos = pos;
 
 	m_obj = tt_3d_object_new();
-	tt_3d_object_use_custom_model(m_obj, assets.car_mesh);
-	tt_3d_object_use_texture(m_obj, assets.car_tex);
-	tt_3d_object_set_position(m_obj, &m_pos);
+
+	//player
+	if(m_is_player)
+	{
+		tt_3d_object_use_custom_model(m_obj, assets.car_mesh);
+		tt_3d_object_use_texture(m_obj, assets.car_tex);
+		tt_3d_object_set_position(m_obj, &m_pos);
+	}
+	//npc
+	else 
+	{
+		tt_3d_object_use_custom_model(m_obj, assets.npc_car_mesh);
+		tt_3d_object_set_position(m_obj, &m_pos);
+	    tt_3d_object_use_texture(m_obj, assets.npc_car_tex);
+		tt_3d_object_back_face_culling(m_obj, false); //the model looks weird otherwise
+	}
 }
 
 crg::car::~car()

@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 	crg::car car(true, player_pos, assets);
 
 	tt_vec3 npc_pos = {-1.5f, 0.0f, 6.0f};
-	crg::npc npc(npc_pos, assets);
+	crg::car npc(false, npc_pos, assets);
 
 	crg::track track(assets);
 
