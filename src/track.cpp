@@ -23,6 +23,7 @@ crg::track::track(crg::assets& assets)
 		tt_3d_object *fence = tt_3d_object_new();
 		tt_vec3 fence_pos = {-100.0f, -1.0f, -120.0f + i * FENCE_LENGTH};
 		tt_vec3 scale = {1.0f, 4.0f, 1.0f};
+		tt_vec3 rot_axis = {0.0f, 1.0f, 0.0f};
 		tt_3d_object_scale(fence, &scale);
 		tt_3d_object_set_position(fence, &fence_pos);
 		tt_3d_object_use_texture(fence, assets.fence_tex);
@@ -33,6 +34,7 @@ crg::track::track(crg::assets& assets)
 		fence_pos.x = 40.0f;
 		fence = tt_3d_object_new();
 		tt_3d_object_scale(fence, &scale);
+		tt_3d_object_rotate(fence, &rot_axis, 1.0f * tt_PI);
 		tt_3d_object_set_position(fence, &fence_pos);
 		tt_3d_object_use_texture(fence, assets.fence_tex);
 		tt_3d_object_use_custom_model(fence, assets.fence_mesh);
@@ -40,19 +42,19 @@ crg::track::track(crg::assets& assets)
 	}
 	for(int i = 0; i < 233; i++)
 	{
-		//top
+		//bottom
 		tt_3d_object *fence = tt_3d_object_new();
 		tt_vec3 fence_pos = {-100.0f + i * FENCE_LENGTH, -1.0f, -120.0f};
 		tt_vec3 rot_axis = {0.0f, 1.0f, 0.0f};
 		tt_vec3 scale = {1.0f, 4.0f, 1.0f};
 		tt_3d_object_scale(fence, &scale);
-		tt_3d_object_rotate(fence, &rot_axis, 0.5f * tt_PI);
+		tt_3d_object_rotate(fence, &rot_axis, 1.5f * tt_PI);
 		tt_3d_object_set_position(fence, &fence_pos);
 		tt_3d_object_use_texture(fence, assets.fence_tex);
 		tt_3d_object_use_custom_model(fence, assets.fence_mesh);
 		m_fence.emplace_back(fence);
 
-		//bottom
+		//top
 		fence_pos.z = 120.0f;
 		fence = tt_3d_object_new();
 		tt_3d_object_scale(fence, &scale);
