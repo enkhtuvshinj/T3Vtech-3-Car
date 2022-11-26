@@ -15,3 +15,9 @@ crg::npc::~npc()
 {
 
 }
+
+void crg::npc::update()
+{
+
+}
+

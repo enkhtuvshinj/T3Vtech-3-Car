@@ -65,6 +65,7 @@ namespace crg
 		public:
 			npc(tt_vec3& pos, crg::assets& assets);
 			~npc();
+			void update();
 	};
 }
 
