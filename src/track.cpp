@@ -30,7 +30,7 @@ crg::track::track(crg::assets& assets)
 		//left side
 		tt_3d_object *fence = tt_3d_object_new();
 		tt_vec3 fence_pos = {-100.0f, -1.0f, -120.0f + i * FENCE_LENGTH};
-		tt_vec3 scale = {1.0f, 4.0f, 1.0f};
+		tt_vec3 scale = {1.0f, 6.0f, 1.0f};
 		tt_vec3 rot_axis = {0.0f, 1.0f, 0.0f};
 		tt_3d_object_scale(fence, &scale);
 		tt_3d_object_set_position(fence, &fence_pos);
@@ -54,7 +54,7 @@ crg::track::track(crg::assets& assets)
 		tt_3d_object *fence = tt_3d_object_new();
 		tt_vec3 fence_pos = {-100.0f + i * FENCE_LENGTH, -1.0f, -120.0f};
 		tt_vec3 rot_axis = {0.0f, 1.0f, 0.0f};
-		tt_vec3 scale = {1.0f, 4.0f, 1.0f};
+		tt_vec3 scale = {1.0f, 6.0f, 1.0f};
 		tt_3d_object_scale(fence, &scale);
 		tt_3d_object_rotate(fence, &rot_axis, 1.5f * tt_PI);
 		tt_3d_object_set_position(fence, &fence_pos);
