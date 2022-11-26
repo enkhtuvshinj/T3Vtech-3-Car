@@ -1,4 +1,5 @@
 #include "crg.hpp"
+#include <fstream>
 
 #define CAR_ACC 3.0f
 #define CAR_MAX_ACC 5.0f
@@ -42,11 +43,56 @@ void crg::car::update()
 }
 
 void crg::car::_update_player() {
+	static tt_vec3 starting_point = {0.0f, 0.0f, 0.0f};
+	static bool have_starting_point = false;
+	static tt_vec3 end_point = {0.0f, 0.0f, 0.0f};
+
 	tt_vec3 vel_delta = tt_math_vec3_mul_float(&m_acc, tt_time_current_frame_s());
 	m_vel = tt_math_vec3_add(&m_vel, &vel_delta);
 	tt_vec3 pos_delta = tt_math_vec3_mul_float(&m_vel, tt_time_current_frame_s());
 	m_pos = tt_math_vec3_add(&m_pos, &pos_delta);
 	tt_3d_object_set_position(m_obj, &m_pos);
+
+	/* NOTE:
+	 * Very idiotic way to store current car positions to a file,
+	 * I use it to build the fence lines, so that I don't have to
+	 * type the fence positions manually.
+	 *
+	 * To remove at the very end.
+	 * */
+	if (tt_input_keyboard_key_down(TT_KEY_U)) {
+		// Save starting point;
+		starting_point = m_pos;
+		have_starting_point = true;
+		printf(
+			"Set start point: %.03f, %.03f, %.03f\n",
+			starting_point.x, starting_point.y, starting_point.z);
+	}
+	if (tt_input_keyboard_key_down(TT_KEY_R)) {
+		// Save starting point;
+		if (have_starting_point) {
+			have_starting_point = false;
+			end_point = m_pos;
+
+			static std::fstream points{"points.txt", std::ios::in | std::ios::out};
+			if (points.is_open()) {
+				points
+					<< "{{" << starting_point.x << ", "
+				       << starting_point.y << ", "
+				       << starting_point.z << "}, "
+					<< "{" << end_point.x << ", "
+				       << end_point.y << ", "
+				       << end_point.z << "}},\n";
+				printf(
+					"Wrote end point: %.03f, %.03f, %.03f\n",
+					end_point.x, end_point.y, end_point.z
+				);
+			}
+
+		} else {
+			printf("No Starting point set\n");
+		}
+	}
 
 	//accelerating the car
 	if(tt_input_keyboard_key_down(TT_KEY_W) ||

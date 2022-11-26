@@ -2,6 +2,7 @@
 
 #include <tt.h>
 #include <vector>
+#include <fstream>
 
 namespace crg
 {
@@ -16,7 +17,7 @@ namespace crg
 			tt_3d_custom_model *npc_car_mesh = NULL;
 			tt_3d_custom_model *fence_mesh = NULL;
 			tt_3d_custom_model *finish_mesh = NULL;
-			tt_3d_custom_model *tree_mesh = NULL;
+			tt_3d_custom_model *tree1_mesh = NULL;
 
 			//textures
 			tt_3d_texture *track_tex = NULL;
@@ -24,7 +25,11 @@ namespace crg
 			tt_3d_texture *npc_car_tex = NULL;
 			tt_3d_texture *fence_tex = NULL;
 			tt_3d_texture *finish_tex = NULL;
-			tt_3d_texture *tree_tex = NULL;
+
+			tt_3d_texture *tree1_tex1 = NULL;
+			tt_3d_texture *tree1_tex2 = NULL;
+			tt_3d_texture *tree1_tex3 = NULL;
+			tt_3d_texture *tree1_tex4 = NULL;
 
 			assets();
 			~assets() {};
