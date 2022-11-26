@@ -1,6 +1,7 @@
 #pragma once
 
 #include <tt.h>
+#include <vector>
 
 namespace crg
 {
@@ -13,11 +14,13 @@ namespace crg
 			//meshes
 			tt_3d_custom_model *car_mesh = NULL;
 			tt_3d_custom_model *npc_car_mesh = NULL;
+			tt_3d_custom_model *fence_mesh = NULL;
 
 			//textures
 			tt_3d_texture *track_tex = NULL;
 			tt_3d_texture *car_tex = NULL;
 			tt_3d_texture *npc_car_tex = NULL;
+			tt_3d_texture *fence_tex = NULL;
 
 			assets();
 			~assets() {};
@@ -27,6 +30,7 @@ namespace crg
 	{
 		private:
 			tt_3d_object *m_obj = NULL;
+			std::vector<tt_3d_object*> m_fence;
 
 		public:
 			track(crg::assets& assets);
