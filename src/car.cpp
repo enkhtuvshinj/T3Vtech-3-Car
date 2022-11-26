@@ -67,7 +67,7 @@ void crg::car::_update_player() {
 		if(tt_math_vec3_length(&m_vel) > 0.0f)
 		{
 			m_acc = tt_math_vec3_normalize(&m_vel);
-			m_acc = tt_math_vec3_mul_float(&m_acc, -5.0f);				
+			m_acc = tt_math_vec3_mul_float(&m_acc, -10.0f);				
 		}
 		if(	tt_math_vec3_length(&m_vel) < 0.01f)
 		{
@@ -125,4 +125,6 @@ void crg::car::set_at_starting_position(crg::track& track)
 	m_pos = track.get_finish_pos();
 	m_pos.z += m_place * 15.0f;
 	m_pos.x += m_place%2 * 10.0f;
+	m_pos.x -= 12.5f;
+	tt_3d_object_set_position(m_obj, &m_pos);
 }
