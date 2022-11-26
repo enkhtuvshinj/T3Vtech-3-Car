@@ -1,6 +1,7 @@
 #include "crg.hpp"
 
 #define FENCE_LENGTH 0.6f
+#define TREE_DISTANCE 4.0f
 
 crg::track::track(crg::assets& assets)
 {
@@ -63,5 +64,27 @@ crg::track::track(crg::assets& assets)
 		tt_3d_object_use_texture(fence, assets.fence_tex);
 		tt_3d_object_use_custom_model(fence, assets.fence_mesh);
 		m_fence.emplace_back(fence);	
+	}
+
+	tt_vec3 initial_fence_pos = { -100.0f, -1.0f, -120.0f};
+	tt_vec3 initial_tree_pos = {
+		initial_fence_pos.x + 1.0f,
+		pos.y,  // No increments with respect to track.
+		initial_fence_pos.x + 1.0f,
+	};
+	tt_vec3 tree_pos = initial_tree_pos;
+
+	// Create trees.
+	for (int i = 0; i < 30; ++i) {
+		for (int j = 0; j < 10; ++j) {
+			tt_3d_object *tree = tt_3d_object_new();
+			tree_pos.z += TREE_DISTANCE;
+			tt_3d_object_set_position(tree, &tree_pos);
+			tt_3d_object_use_custom_model(tree, assets.tree_mesh);
+			tt_3d_object_use_texture(tree, assets.tree_tex);
+			m_trees.emplace_back(tree);
+		}
+		tree_pos.x += TREE_DISTANCE;
+		tree_pos.z = initial_tree_pos.z;
 	}
 }

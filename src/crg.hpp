@@ -15,12 +15,14 @@ namespace crg
 			tt_3d_custom_model *car_mesh = NULL;
 			tt_3d_custom_model *npc_car_mesh = NULL;
 			tt_3d_custom_model *fence_mesh = NULL;
+			tt_3d_custom_model *tree_mesh = NULL;
 
 			//textures
 			tt_3d_texture *track_tex = NULL;
 			tt_3d_texture *car_tex = NULL;
 			tt_3d_texture *npc_car_tex = NULL;
 			tt_3d_texture *fence_tex = NULL;
+			tt_3d_texture *tree_tex = NULL;
 
 			assets();
 			~assets() {};
@@ -31,6 +33,7 @@ namespace crg
 		private:
 			tt_3d_object *m_obj = NULL;
 			std::vector<tt_3d_object*> m_fence;
+			std::vector<tt_3d_object*> m_trees;
 
 		public:
 			track(crg::assets& assets);
