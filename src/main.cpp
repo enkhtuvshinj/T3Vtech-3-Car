@@ -1,3 +1,5 @@
+#include<chrono>
+#include<thread>
 #include "crg.hpp"
 
 #define NUM_NPC 7
@@ -28,7 +30,7 @@ int main(int argc, char *argv[])
 	tt_3d_custom_model *sky_model = NULL;
 	sky_model=tt_3d_custom_model_load_file("assets/sky.obj");
 	tt_3d_texture *sky_texture = NULL;
-	sky_texture=tt_3d_texture_new("assets/car_game_sky3.png", false);
+	sky_texture=tt_3d_texture_new("assets/car_game_sky_high_res_no_alpha.png", false);
 
 	tt_3d_object_use_custom_model(sky, sky_model);
 	tt_3d_object_use_texture(sky, sky_texture);
@@ -52,6 +54,7 @@ int main(int argc, char *argv[])
 		tt_3d_object_set_position(sky, &pos);
 
 		tt_new_frame();
+		std::this_thread::sleep_for(std::chrono::milliseconds(33));
 	}
 
 	return 0;

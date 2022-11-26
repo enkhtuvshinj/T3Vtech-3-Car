@@ -56,6 +56,8 @@ namespace crg
 			tt_vec3 m_rot = {0.0f, 0.0f, 0.0f};
 			tt_vec3 m_dir = {0.0f, 0.0f, -1.0f}; //initial orientation
 			unsigned int m_place;
+			void _update_player();
+			void _update_npc();
 
 		public:
 			bool m_is_player;

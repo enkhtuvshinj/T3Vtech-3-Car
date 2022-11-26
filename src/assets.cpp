@@ -11,7 +11,7 @@ crg::assets::assets()
 
 	//textures
 	car_tex = tt_3d_texture_new("assets/car_enj_no_mirror.png", false);
-	track_tex = tt_3d_texture_new("assets/track.png", false);
+	track_tex = tt_3d_texture_new("assets/track_high_res.png", false);
 	npc_car_tex = tt_3d_texture_new("assets/car_mat.png", false);
 	fence_tex = tt_3d_texture_new("assets/fence.png", false);
 	finish_tex = tt_3d_texture_new("assets/finish.png", false);
