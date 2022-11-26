@@ -22,13 +22,6 @@ int main(int argc, char *argv[])
 		npc.emplace_back(tmp_npc);
 	}
 
-	tt_vec3 light_col={0.5f, 0.3f, 0.03f};
-	tt_vec3 light_pos={-20.0f, 10.0f, -50.0f};
-	tt_point_light light=tt_point_light_new();
-	tt_point_light_set_color(light, &light_col);
-	tt_point_light_set_position(light, &light_pos);
-	tt_point_light_set_strength(light, 2500.0f);
-
 	//skybox
 	tt_3d_object *sky = NULL;
 	sky=tt_3d_object_new();
