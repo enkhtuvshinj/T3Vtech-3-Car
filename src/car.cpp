@@ -105,3 +105,10 @@ void crg::car::update()
 		tt_camera_set_position(&cam_pos);
 	}
 }
+
+void crg::car::get_position(tt_vec3* pos_out) {
+    pos_out->x = m_pos.x;
+    pos_out->y = m_pos.y;
+    pos_out->z = m_pos.z;
+}
+

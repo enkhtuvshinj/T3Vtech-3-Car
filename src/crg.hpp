@@ -53,6 +53,21 @@ namespace crg
 			car(bool is_player, tt_vec3& pos, crg::assets& assets);
 			~car();
 			void update();
+			void get_position(tt_vec3* pos_out);
+	};
+
+    // Guide cube for the NPC to reach in a straight line.
+	class guide_cube
+	{
+		private:
+			tt_vec3 m_pos = {0.0f, 0.0f, 0.0f};
+			tt_vec3 m_vel = {0.0f, 0.0f, 0.0f};
+			tt_vec3 m_acc = {0.0f, 0.0f, 0.0f};
+			tt_vec3 m_rot = {0.0f, 0.0f, 0.0f};
+
+		public:
+			guide_cube(tt_vec3& pos);
+			~guide_cube();
 	};
 }
 
