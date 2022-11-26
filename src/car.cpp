@@ -104,6 +104,29 @@ void crg::car::_update_player() {
 		m_dir.x *= -1.0f;
 	}
 
+	//friction
+	tt_vec3 tmp_vel_normalized = {0.0f, 0.0f, 0.0f};
+	tt_vec3 tmp_acc_normalized = {0.0f, 0.0f, 0.0f};
+	if(tt_math_vec3_length(&m_vel) != 0.0f && tt_math_vec3_length(&m_acc)  != 0.0f)
+	{
+		tmp_vel_normalized = tt_math_vec3_normalize(&m_vel);
+		tmp_acc_normalized = tt_math_vec3_normalize(&m_acc);
+	}
+	float angle_friction = tt_math_vec3_dot(&tmp_vel_normalized, &tmp_acc_normalized);
+	float strength_friction = (1 - abs(angle_friction)) * tt_math_vec3_length(&m_vel);
+	tt_vec3 rot_axis = {0.0f, 1.0f, 0.0f};
+	tt_vec3 friction;
+	if(angle_friction>0)
+	{
+		friction = tt_math_vec3_rotate(&rot_axis, 0.5f * tt_PI, &m_acc);		
+	}
+	else
+	{
+		friction = tt_math_vec3_rotate(&rot_axis, -0.5f * tt_PI, &m_acc);				
+	}
+	friction = tt_math_vec3_mul_float(&friction, strength_friction);
+	m_acc = tt_math_vec3_add(&m_acc, &friction);
+
 	//positioning the camera
 	tt_vec3 cam_pos_delta = tt_math_vec3_mul_float(&m_dir, -7.5f);
 	tt_vec3 cam_pos = tt_math_vec3_add(&m_pos, &cam_pos_delta);

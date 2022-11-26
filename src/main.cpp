@@ -54,7 +54,6 @@ int main(int argc, char *argv[])
 		tt_3d_object_set_position(sky, &pos);
 
 		tt_new_frame();
-		std::this_thread::sleep_for(std::chrono::milliseconds(33));
 	}
 
 	return 0;
