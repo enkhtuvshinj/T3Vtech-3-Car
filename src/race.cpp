@@ -6,7 +6,7 @@ static std::vector<tt_vec3> race_checkpoints;
 static void _init_checkpoints();
 
 
-crg::race::race(uint32_t number_of_laps)
+crg::race::race()
 {
 	build_checkpoint_cubes();
 }

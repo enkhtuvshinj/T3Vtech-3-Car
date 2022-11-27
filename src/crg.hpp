@@ -139,7 +139,7 @@ namespace crg
 
 			void build_checkpoint_cubes();
 		public:
-			race(uint32_t number_of_laps);
+			race();
 			~race();
 
 			void add_participant(car* car_entity);
