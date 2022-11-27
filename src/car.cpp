@@ -1,9 +1,10 @@
 #include "crg.hpp"
 #include <fstream>
 
-#define CAR_ACC 3.0f
-#define CAR_MAX_ACC 5.0f
-#define CAR_ROT 0.6f
+#define CAR_ACC 50.0f //acceleration
+#define CAR_RACC -10.0f //reverse acceleration
+#define CAR_ROT 0.6f //car turning speed
+#define CAR_FRICTION -0.99f //friction value
 
 crg::car::car(unsigned int place, bool is_player, crg::assets& assets)
 {
@@ -105,23 +106,16 @@ void crg::car::_update_player() {
 		}
 		else
 		{
-			m_acc = tt_math_vec3_mul_float(&m_acc, -CAR_ACC);
+			m_acc = tt_math_vec3_mul_float(&m_acc, CAR_RACC);
 		}
 	}
 	else
 	{
-		if(tt_math_vec3_length(&m_vel) > 0.0f)
-		{
-			m_acc = tt_math_vec3_normalize(&m_vel);
-			m_acc = tt_math_vec3_mul_float(&m_acc, -10.0f);				
-		}
-		if(	tt_math_vec3_length(&m_vel) < 0.01f)
-		{
-			m_vel.x = 0.0f;
-			m_vel.y = 0.0f;
-			m_vel.z = 0.0f;
-		}
+		m_acc.x = 0.0f;
+		m_acc.y = 0.0f;
+		m_acc.z = 0.0f;
 	}
+
 	//turning the car
 	if(tt_input_keyboard_key_down(TT_KEY_A))
 	{
@@ -151,26 +145,7 @@ void crg::car::_update_player() {
 	}
 
 	//friction
-	tt_vec3 tmp_vel_normalized = {0.0f, 0.0f, 0.0f};
-	tt_vec3 tmp_acc_normalized = {0.0f, 0.0f, 0.0f};
-	if(tt_math_vec3_length(&m_vel) != 0.0f && tt_math_vec3_length(&m_acc)  != 0.0f)
-	{
-		tmp_vel_normalized = tt_math_vec3_normalize(&m_vel);
-		tmp_acc_normalized = tt_math_vec3_normalize(&m_acc);
-	}
-	float angle_friction = tt_math_vec3_dot(&tmp_vel_normalized, &tmp_acc_normalized);
-	float strength_friction = (1 - abs(angle_friction)) * tt_math_vec3_length(&m_vel);
-	tt_vec3 rot_axis = {0.0f, 1.0f, 0.0f};
-	tt_vec3 friction;
-	if(angle_friction>0)
-	{
-		friction = tt_math_vec3_rotate(&rot_axis, 0.5f * tt_PI, &m_acc);		
-	}
-	else
-	{
-		friction = tt_math_vec3_rotate(&rot_axis, -0.5f * tt_PI, &m_acc);				
-	}
-	friction = tt_math_vec3_mul_float(&friction, strength_friction);
+	tt_vec3 friction = tt_math_vec3_mul_float(&m_vel, CAR_FRICTION);
 	m_acc = tt_math_vec3_add(&m_acc, &friction);
 
 	//positioning the camera
