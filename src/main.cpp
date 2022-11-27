@@ -11,18 +11,19 @@ int main(int argc, char *argv[])
 	crg::assets assets;
 	crg::track track(assets);
 
-	//creating player car
-	crg::car car(NUM_NPC+1, true, assets);
-	car.set_at_starting_position(track);
-
-	//create NPCs
-	std::vector<crg::car> npc;
+	//create NPC cars
+	std::vector<crg::car> car;
 	for(int i = 0; i<NUM_NPC; i++)
 	{
-		crg::car tmp_npc(i+1, false, assets);
-		tmp_npc.set_at_starting_position(track);
-		npc.emplace_back(tmp_npc);
+		crg::car tmp_car(i+1, false, assets);
+		tmp_car.set_at_starting_position(track);
+		car.emplace_back(tmp_car);
 	}
+
+	//and the player car
+	crg::car tmp_car(NUM_NPC+1, true, assets);
+	tmp_car.set_at_starting_position(track);
+	car.emplace_back(tmp_car);
 
 	//skybox
 	tt_3d_object *sky = NULL;
@@ -43,13 +44,16 @@ int main(int argc, char *argv[])
 
 	while(!tt_input_keyboard_key_press(TT_KEY_ESC))
 	{
-		car.update();
-		for(int i = 0; i<npc.size(); i++)
+		for(int i = 0; i<car.size(); i++)
 		{
-			npc[i].update();
+			car[i].update();
+			for(int j = 0; j<car.size(); j++)
+			{
+				car[i].colliding_with_car(car[j]);
+			}
 		}
 
-		car.get_position(&pos);
+		car[NUM_NPC].get_position(&pos); //player car
 		pos.y = 280.0f;
 		tt_3d_object_set_position(sky, &pos);
 

@@ -70,7 +70,12 @@ namespace crg
 			~car();
 			void update();
 			void get_position(tt_vec3* pos_out);
+			tt_3d_object* get_3d_object() {return m_obj;};
+			tt_vec3 get_vel() {return m_vel;};
+			void set_vel(tt_vec3& vel) {m_vel=vel;};
+			tt_vec3 get_acc() {return m_acc;};
 			void set_at_starting_position(crg::track& track);
+			void colliding_with_car(crg::car& car);
 	};
 
     // Guide cube for the NPC to reach in a straight line.
