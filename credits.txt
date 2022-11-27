@@ -1,0 +1,11 @@
+The only third party asset used in this game is the font in assets/.
+It is made by GeelynEdits.
+and is available on https://www.fontspace.com/pixelletters-font-f22954.
+
+Three people were working on this:
+T3V (https://github.com/tevoran)
+enkhtuvshinj (https://github.com/enkhtuvshinj)
+asmateus (https://github.com/asmateus)
+
+The repository of this game is publicly available on
+https://github.com/enkhtuvshinj/T3Vtech-3-template

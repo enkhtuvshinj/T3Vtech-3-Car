@@ -3,7 +3,7 @@ extern bool tt_frustum_culling_trigger;
 
 void crg::init()
 {
-	tt_init("Wild Racing Game", 1000, 800, false, 0, NULL);
+	tt_init("Wild Racing Game", 1000, 800, true, 0, NULL);
 
 	//setting general lighting properties
 	tt_gfx_gouraud_shading(true);
