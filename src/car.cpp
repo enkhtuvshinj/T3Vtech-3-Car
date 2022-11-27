@@ -48,6 +48,9 @@ void crg::car::_update_player() {
 	static bool have_starting_point = false;
 	static tt_vec3 end_point = {0.0f, 0.0f, 0.0f};
 
+	static tt_vec3 copied_point = {0.0f, 0.0f, 0.0f};
+	static bool have_copied_point = false;
+
 	tt_vec3 vel_delta = tt_math_vec3_mul_float(&m_acc, tt_time_current_frame_s());
 	m_vel = tt_math_vec3_add(&m_vel, &vel_delta);
 	tt_vec3 pos_delta = tt_math_vec3_mul_float(&m_vel, tt_time_current_frame_s());
@@ -92,6 +95,36 @@ void crg::car::_update_player() {
 
 		} else {
 			printf("No Starting point set\n");
+		}
+	}
+	/* Same but for trees. */
+	if (tt_input_keyboard_key_down(TT_KEY_C)) {
+		// Save starting point;
+		copied_point = m_pos;
+		have_copied_point = true;
+		printf(
+			"Copied point: %.03f, %.03f, %.03f\n",
+			copied_point.x, copied_point.y, copied_point.z);
+	}
+	if (tt_input_keyboard_key_down(TT_KEY_P)) {
+		// Save starting point;
+		if (have_copied_point) {
+			have_copied_point = false;
+
+			static std::fstream points{"points_trees.txt", std::ios::in | std::ios::out};
+			if (points.is_open()) {
+				points
+					<< "{{" << copied_point.x << ", "
+				       << copied_point.y << ", "
+				       << copied_point.z << "}},\n";
+				printf(
+					"Stored point: %.03f, %.03f, %.03f\n",
+					copied_point.x, copied_point.y, copied_point.z
+				);
+			}
+
+		} else {
+			printf("No Copied point set\n");
 		}
 	}
 
