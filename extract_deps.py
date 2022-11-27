@@ -1,6 +1,6 @@
 import subprocess
 
-result = subprocess.run(["ldd", "car-racing"], stdout=subprocess.PIPE)
+result = subprocess.run(["ldd", "build/car-racing"], stdout=subprocess.PIPE)
 deps = result.stdout
 
 deps = [d.decode("utf-8") for d in deps.splitlines()]
