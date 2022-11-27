@@ -50,6 +50,7 @@ int main(int argc, char *argv[])
 			for(int j = 0; j<car.size(); j++)
 			{
 				car[i].colliding_with_car(car[j]);
+				car[i].colliding_with_track(track);
 			}
 		}
 

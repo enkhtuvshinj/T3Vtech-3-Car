@@ -40,14 +40,16 @@ namespace crg
 		private:
 			tt_3d_object *m_obj = NULL;
 			tt_3d_object *m_finish = NULL;
-			std::vector<tt_3d_object*> m_fence;
 			std::vector<tt_3d_object*> m_trees;
 			tt_vec3 m_finish_pos = {-143.0f, 0.0f, 0.0f};
 
 		public:
+			std::vector<tt_3d_object*> m_fence;
+			std::vector<tt_3d_object*> fence_collision;
 			track(crg::assets& assets);
 			~track() {};
 			tt_vec3 get_finish_pos() {return m_finish_pos;};
+
 	};
 
 	class car
@@ -76,6 +78,7 @@ namespace crg
 			tt_vec3 get_acc() {return m_acc;};
 			void set_at_starting_position(crg::track& track);
 			void colliding_with_car(crg::car& car);
+			void colliding_with_track(crg::track& track);
 	};
 
     // Guide cube for the NPC to reach in a straight line.

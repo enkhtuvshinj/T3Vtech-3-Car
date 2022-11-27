@@ -1,7 +1,7 @@
 #include "crg.hpp"
 #include <cmath>
 
-#define FENCE_LENGTH 0.6f
+#define FENCE_LENGTH 0.6f //18.4f //originally 0.6f
 #define TREE_DISTANCE 6.0f
 
 static uint32_t get_random_number_in_range(uint32_t max_bound) {
@@ -80,6 +80,27 @@ crg::track::track(crg::assets& assets)
 		float angle = std::acos(
 			tt_math_vec3_dot(&line_vec, &ref_frame) / 1.0 // Vectors are normalized.
 		);
+		printf("%f\n", angle);
+
+		if(line_vec.x > 0)
+		{
+			angle += 0.5f * tt_PI;
+		}
+
+		{
+			tt_3d_object *tmp_collision_cube = tt_3d_object_new();
+			tt_3d_object_make_invisible(tmp_collision_cube, false);
+			tt_3d_object_make_cube(tmp_collision_cube);
+			tt_3d_object_back_face_culling(tmp_collision_cube, false);
+			tt_vec3 tmp_collision_cube_pos = tt_math_vec3_add(&start_pos, &end_pos);
+			tmp_collision_cube_pos = tt_math_vec3_mul_float(&tmp_collision_cube_pos, 0.5f);
+			tt_3d_object_set_position(tmp_collision_cube, &tmp_collision_cube_pos);
+			tt_vec3 size = {1.0f, 6.0f, total_length};
+			tt_vec3 rot_axis = {0.0f, 1.0f, 0.0f};
+			tt_3d_object_rotate(tmp_collision_cube, &rot_axis, angle);
+			tt_3d_object_scale(tmp_collision_cube, &size);
+			fence_collision.emplace_back(tmp_collision_cube);
+		}
 
 		float fence_length = 0.0f;
 		for (int i = 0; total_length > fence_length; ++i) {
@@ -99,6 +120,9 @@ crg::track::track(crg::assets& assets)
 			m_fence.emplace_back(fence);
 		}
 	}
+
+	//create batch object out of the fences to improve performance
+
 
 	tt_vec3 initial_fence_pos = { -100.0f, -1.0f, -120.0f};
 	tt_vec3 initial_tree_pos = {
