@@ -45,7 +45,6 @@ namespace crg
 
 		public:
 			std::vector<tt_3d_object*> m_fence;
-			std::vector<tt_3d_object*> fence_collision;
 			track(crg::assets& assets);
 			~track() {};
 			tt_vec3 get_finish_pos() {return m_finish_pos;};
