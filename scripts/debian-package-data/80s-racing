@@ -1,0 +1,5 @@
+#!/bin/bash
+# 80s-racing prototype calling script
+
+cd /usr/games/80s-racing
+./80s-racing

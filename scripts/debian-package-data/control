@@ -1,0 +1,8 @@
+Package: 80s-racing
+Version: 0.0.1 
+Section: games
+Priority: optional 
+Architecture: amd64
+Depends: libsdl2-2.0-0, libsdl2-ttf-2.0-0, libglew2.1, libopenal1, libc6 (>=2.31)
+Maintainer: j.pfeiffer93@gmx.de
+Description: 80s-racing game
