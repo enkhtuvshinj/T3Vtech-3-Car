@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
 	//and the player car
 	crg::car tmp_car(NUM_NPC+1, true, assets);
 	tmp_car.set_at_starting_position(track);
+	race.add_participant(&tmp_car);
 	car.emplace_back(tmp_car);
 
 	//skybox
@@ -61,6 +62,7 @@ int main(int argc, char *argv[])
 		tt_3d_object_set_position(sky, &pos);
 
 		ui.update(car);
+		race.update();
 		tt_new_frame();
 	}
 
