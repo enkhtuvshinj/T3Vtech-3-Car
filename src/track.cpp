@@ -84,7 +84,7 @@ crg::track::track(crg::assets& assets)
 
 		if(line_vec.x > 0)
 		{
-			angle += 0.5f * tt_PI;
+			angle *= -1.0f;
 		}
 
 		{
