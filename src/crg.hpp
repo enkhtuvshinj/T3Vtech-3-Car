@@ -94,5 +94,11 @@ namespace crg
 			guide_cube(tt_vec3& pos);
 			~guide_cube();
 	};
+
+	class ui_panel
+	{
+		ui_panel();
+		~ui_panel();
+	};
 }
 
