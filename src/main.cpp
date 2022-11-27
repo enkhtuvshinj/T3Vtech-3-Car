@@ -42,6 +42,7 @@ int main(int argc, char *argv[])
 	tt_3d_object_light_affected(sky, false);
 	tt_3d_object_back_face_culling(sky, false);
 
+	crg::ui_panel ui;
 	while(!tt_input_keyboard_key_press(TT_KEY_ESC))
 	{
 		for(int i = 0; i<car.size(); i++)
@@ -58,6 +59,7 @@ int main(int argc, char *argv[])
 		pos.y = 280.0f;
 		tt_3d_object_set_position(sky, &pos);
 
+		ui.update(car);
 		tt_new_frame();
 	}
 

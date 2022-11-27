@@ -3,6 +3,7 @@
 #include <tt.h>
 #include <vector>
 #include <fstream>
+#include <string>
 
 namespace crg
 {
@@ -71,6 +72,7 @@ namespace crg
 			~car();
 			void update();
 			void get_position(tt_vec3* pos_out);
+			unsigned int get_place() {return m_place; };
 			tt_3d_object* get_3d_object() {return m_obj;};
 			tt_vec3 get_vel() {return m_vel;};
 			void set_vel(tt_vec3& vel) {m_vel=vel;};
@@ -96,8 +98,20 @@ namespace crg
 
 	class ui_panel
 	{
-		ui_panel();
-		~ui_panel();
+		private:
+			tt_font *m_font_big = NULL;
+			tt_font *m_font_mid = NULL;
+			tt_font *m_font_small = NULL;
+
+			tt_2d_object *m_place = NULL;
+			tt_2d_object *m_speed = NULL;
+
+			tt_2d_texture *m_place_tex = NULL;
+			tt_2d_texture *m_speed_tex = NULL;
+		public:
+			ui_panel();
+			~ui_panel();
+			void update(std::vector<crg::car>& car);
 	};
 }
 
