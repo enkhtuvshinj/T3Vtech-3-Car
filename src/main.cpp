@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
 
 	crg::assets assets;
 	crg::track track(assets);
+	crg::race race(2);
 
 	//create NPC cars
 	std::vector<crg::car> car;

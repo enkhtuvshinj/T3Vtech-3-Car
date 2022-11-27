@@ -113,5 +113,19 @@ namespace crg
 			~ui_panel();
 			void update(std::vector<crg::car>& car);
 	};
+
+	class race
+	{
+		private:
+			bool m_has_started{false};
+			std::vector<tt_3d_object*> m_checkpoints;
+
+			void build_checkpoint_cubes();
+		public:
+			race(uint32_t number_of_laps);
+			~race();
+
+			void add_participant(car* car_entity);
+	};
 }
 
