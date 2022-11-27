@@ -17,8 +17,8 @@ int main(int argc, char *argv[])
 	tt_vec3 p_pos{-161.091, 0, 8.52551};
 	std::vector<tt_vec3> npc_start_positions{
 		{p_pos.x + 4.0f * 1, 0, p_pos.z},
-		{p_pos.x + 4.0f * 2 + 1.0f, 0, p_pos.z},
-		{p_pos.x + 4.0f * 3 + 2.0f, 0, p_pos.z},
+//		{p_pos.x + 4.0f * 2 + 1.0f, 0, p_pos.z},
+//		{p_pos.x + 4.0f * 3 + 2.0f, 0, p_pos.z},
 	};
 	G_num_npcs = npc_start_positions.size();
 
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 	crg::ui_panel ui(&_game_state);
 	while(!tt_input_keyboard_key_press(TT_KEY_ESC))
 	{
-		if (_game_state == PLAY_STATE || _game_state == OUTRO_STATE) {
+		if (_game_state == PLAY_STATE) {
 			for(int i = 0; i<car.size(); i++)
 			{
 				car[i].update();

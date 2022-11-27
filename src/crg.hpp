@@ -5,7 +5,7 @@
 #include <fstream>
 #include <string>
 
-#define MAX_LAP 2
+#define MAX_LAP 1
 #define INTRO_STATE 1
 #define PLAY_STATE 2
 #define OUTRO_STATE 3
@@ -60,6 +60,10 @@ namespace crg
 	class car
 	{
 		private:
+			std::vector<tt_vec3> m_npc_guide_points;
+			uint32_t m_next_guide_point{99};
+			tt_vec3* m_next_point;
+			tt_vec3 m_desired_dir;
 			tt_3d_object *m_obj = NULL;
 			tt_3d_custom_model *m_mesh = NULL;
 			tt_vec3 m_pos = {0.0f, 0.0f, 0.0f};
