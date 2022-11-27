@@ -35,18 +35,7 @@ crg::car::~car()
 
 }
 
-void crg::car::update()
-{
-	_update_player();
-/*	if(m_is_player) {
-		_update_player();
-	} else {
-		_update_npc();
-	}
-*/
-}
-
-void crg::car::_update_player() {
+void crg::car::update() {
 	static tt_vec3 starting_point = {0.0f, 0.0f, 0.0f};
 	static bool have_starting_point = false;
 	static tt_vec3 end_point = {0.0f, 0.0f, 0.0f};
@@ -179,20 +168,17 @@ void crg::car::_update_player() {
 			tt_camera_rotate(&rot_axis, -radians);
 			m_dir.x *= -1.0f;
 		}
+
+		//positioning the camera
+		tt_vec3 cam_pos_delta = tt_math_vec3_mul_float(&m_dir, -7.5f);
+		tt_vec3 cam_pos = tt_math_vec3_add(&m_pos, &cam_pos_delta);
+		cam_pos.y += 2.0f;
+		tt_camera_set_position(&cam_pos);
 	}
 
 	//friction
 	tt_vec3 friction = tt_math_vec3_mul_float(&m_vel, CAR_FRICTION);
 	m_acc = tt_math_vec3_add(&m_acc, &friction);
-
-	//positioning the camera
-	tt_vec3 cam_pos_delta = tt_math_vec3_mul_float(&m_dir, -7.5f);
-	tt_vec3 cam_pos = tt_math_vec3_add(&m_pos, &cam_pos_delta);
-	cam_pos.y += 2.0f;
-	tt_camera_set_position(&cam_pos);
-}
-
-void crg::car::_update_npc() {
 }
 
 void crg::car::get_position(tt_vec3* pos_out) {
@@ -239,7 +225,6 @@ void crg::car::colliding_with_car(crg::car& car)
 		m_acc.x = 0.0f;
 		m_acc.y = 0.0f;
 		m_acc.z = 0.0f;
-		printf("%f %f %f\n", m_vel.x, m_vel.y, m_vel.z);
 	}
 	tt_3d_object_set_position(m_obj, &m_pos);
 	tt_3d_object_set_position(other_obj, &pos_other);
