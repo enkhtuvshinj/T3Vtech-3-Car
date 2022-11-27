@@ -232,20 +232,22 @@ void crg::car::colliding_with_car(crg::car& car)
 
 void crg::car::colliding_with_track(crg::track& track)
 {
-	for(int i = 0; i<track.fence_collision.size(); i++)
+	//checking if there would be a collision in the next frame
+	tt_vec3 tmp_pos = tt_math_vec3_mul_float(&m_vel, tt_time_current_frame_s());
+	tmp_pos = tt_math_vec3_add(&m_pos, &tmp_pos);
+	tt_3d_object_set_position(m_obj, &tmp_pos);
+	for(int i = 0; i<track.m_fence.size(); i++)
 	{
-		//checking if there would be a collision in the next frame
-		tt_vec3 tmp_pos = tt_math_vec3_mul_float(&m_vel, tt_time_current_frame_s());
-		tmp_pos = tt_math_vec3_add(&m_pos, &tmp_pos);
-		tt_3d_object_set_position(m_obj, &tmp_pos);
-		if(tt_3d_object_colliding_aabb(m_obj, track.fence_collision[i]))
+		if(tt_3d_object_colliding_aabb(m_obj, track.m_fence[i]))
 		{
 			m_vel = tt_math_vec3_mul_float(&m_vel, -0.5f * CAR_COLL); //setting the direction for this car
 			m_acc.x = 0.0f;
 			m_acc.y = 0.0f;
 			m_acc.z = 0.0f;
+			break;
 		}
-		tt_3d_object_set_position(m_obj, &m_pos);
 	}
+	tt_3d_object_set_position(m_obj, &m_pos);
+
 
 }
