@@ -5,7 +5,7 @@
 #define CAR_RACC -10.0f //reverse acceleration
 #define CAR_ROT 0.6f //car turning speed
 #define CAR_FRICTION -0.99f //friction value
-#define CAR_COLL 0.7f //speed after colliding with something
+#define CAR_COLL 0.5f //speed after colliding with something
 
 crg::car::car(unsigned int place, bool is_player, crg::assets& assets)
 {
@@ -219,9 +219,9 @@ void crg::car::colliding_with_car(crg::car& car)
 	{
 		tt_vec3 vel_other = car.get_vel();
 		tt_vec3 vel_coll = tt_math_vec3_add(&m_vel, &vel_other);
-		m_vel = tt_math_vec3_mul_float(&vel_coll, 0.5f);
+		m_vel = tt_math_vec3_mul_float(&vel_coll, 0.5f * CAR_COLL);
 		car.set_vel(m_vel); //set the velocity for the other car
-		m_vel = tt_math_vec3_mul_float(&vel_coll, -1.0f); //setting the direction for this car
+		m_vel = tt_math_vec3_mul_float(&m_vel, -1.0f); //setting the direction for this car
 		m_acc.x = 0.0f;
 		m_acc.y = 0.0f;
 		m_acc.z = 0.0f;
