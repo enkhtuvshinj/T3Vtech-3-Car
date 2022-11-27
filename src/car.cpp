@@ -66,87 +66,8 @@ void crg::car::update() {
 	m_acc.y = 0.0f;
 	m_acc.z = 0.0f;
 
-	/* NOTE:
-	 * Very idiotic way to store current car positions to a file,
-	 * I use it to build the fence lines, so that I don't have to
-	 * type the fence positions manually.
-	 *
-	 * To remove at the very end.
-	 * */
 	if(m_is_player)
 	{
-		if (tt_input_keyboard_key_down(TT_KEY_U)) {
-			// Save starting point;
-			starting_point = m_pos;
-			have_starting_point = true;
-			printf(
-				"Set start point: %.03f, %.03f, %.03f\n",
-				starting_point.x, starting_point.y, starting_point.z);
-		}
-		if (tt_input_keyboard_key_down(TT_KEY_R)) {
-			// Save starting point;
-			if (have_starting_point) {
-				have_starting_point = false;
-				end_point = m_pos;
-
-				static std::fstream points{"points.txt", std::ios::in | std::ios::out};
-				if (points.is_open()) {
-					points
-						<< "{{" << starting_point.x << ", "
-					       << starting_point.y << ", "
-					       << starting_point.z << "}, "
-						<< "{" << end_point.x << ", "
-					       << end_point.y << ", "
-					       << end_point.z << "}},\n";
-					printf(
-						"Wrote end point: %.03f, %.03f, %.03f\n",
-						end_point.x, end_point.y, end_point.z
-					);
-				}
-
-			} else {
-				printf("No Starting point set\n");
-			}
-		}
-		/* Same but for trees. */
-		if (tt_input_keyboard_key_down(TT_KEY_C)) {
-			// Save starting point;
-			copied_point = m_pos;
-			have_copied_point = true;
-			/*
-			printf(
-				"Copied point: %.03f, %.03f, %.03f\n",
-				copied_point.x, copied_point.y, copied_point.z);
-			*/
-		}
-		if (tt_input_keyboard_key_down(TT_KEY_P)) {
-			// Save starting point;
-			if (have_copied_point) {
-				have_copied_point = false;
-
-				static std::fstream points{"points_trees.txt", std::ios::in | std::ios::out};
-				if (points.is_open()) {
-					/*
-					points
-						<< "{{" << copied_point.x << ", "
-					       << copied_point.y << ", "
-					       << copied_point.z << "}},\n";
-						   */
-					points << m_total_checkpoints << "\n";
-					printf("Stored point: %d\n", m_total_checkpoints);
-					/*
-					printf(
-						"Stored point: %.03f, %.03f, %.03f\n",
-						copied_point.x, copied_point.y, copied_point.z
-					);
-					*/
-				}
-
-			} else {
-				//printf("No Copied point set\n");
-			}
-		}
-
 		//accelerating the car
 		if(tt_input_keyboard_key_down(TT_KEY_W) ||
 			tt_input_keyboard_key_down(TT_KEY_S))
@@ -321,7 +242,9 @@ void crg::car::set_at_starting_position(tt_vec3* start_pos)
 
 void crg::car::colliding_with_car(crg::car& car)
 {
-	return;
+	if (!m_is_player) {
+		return;
+	}
 	tt_3d_object *other_car = car.get_3d_object();
 	if(m_obj == other_car)
 	{
@@ -338,20 +261,18 @@ void crg::car::colliding_with_car(crg::car& car)
 	car.get_position(&pos_other);
 	tmp_pos = tt_math_vec3_mul_float(&vel_other, tt_time_current_frame_s());
 	tmp_pos = tt_math_vec3_add(&pos_other, &tmp_pos);
-	tt_3d_object_set_position(other_obj, &tmp_pos);
 	if(tt_3d_object_colliding_aabb(m_obj, other_car))
 	{
 		tt_vec3 vel_other = car.get_vel();
 		tt_vec3 vel_coll = tt_math_vec3_add(&m_vel, &vel_other);
 		m_vel = tt_math_vec3_mul_float(&vel_coll, 0.5f * CAR_COLL);
-		car.set_vel(m_vel); //set the velocity for the other car
+		//car.set_vel(m_vel); //set the velocity for the other car
 		m_vel = tt_math_vec3_mul_float(&m_vel, -1.0f); //setting the direction for this car
 		m_acc.x = 0.0f;
 		m_acc.y = 0.0f;
 		m_acc.z = 0.0f;
 	}
 	tt_3d_object_set_position(m_obj, &m_pos);
-	tt_3d_object_set_position(other_obj, &pos_other);
 }
 
 void crg::car::colliding_with_track(crg::track& track)
