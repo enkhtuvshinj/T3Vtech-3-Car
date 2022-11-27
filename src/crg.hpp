@@ -5,6 +5,8 @@
 #include <fstream>
 #include <string>
 
+#define MAX_LAP 5
+
 namespace crg
 {
 	void init();
@@ -62,6 +64,8 @@ namespace crg
 			tt_vec3 m_acc = {0.0f, 0.0f, 0.0f};
 			tt_vec3 m_rot = {0.0f, 0.0f, 0.0f};
 			tt_vec3 m_dir = {0.0f, 0.0f, -1.0f}; //initial orientation
+			unsigned int m_current_lap = 0;
+			float m_current_lap_time = 0.0f;
 			unsigned int m_place;
 			void _update_player();
 			void _update_npc();
@@ -71,12 +75,16 @@ namespace crg
 			car(unsigned int place, bool is_player, crg::assets& assets);
 			~car();
 			void update();
+
 			void get_position(tt_vec3* pos_out);
 			unsigned int get_place() {return m_place; };
 			tt_3d_object* get_3d_object() {return m_obj;};
 			tt_vec3 get_vel() {return m_vel;};
 			void set_vel(tt_vec3& vel) {m_vel=vel;};
 			tt_vec3 get_acc() {return m_acc;};
+			unsigned int get_current_lap() {return m_current_lap;};
+			float get_current_lap_time() {return m_current_lap_time;};
+
 			void set_at_starting_position(crg::track& track);
 			void colliding_with_car(crg::car& car);
 			void colliding_with_track(crg::track& track);
@@ -105,9 +113,15 @@ namespace crg
 
 			tt_2d_object *m_place = NULL;
 			tt_2d_object *m_speed = NULL;
+			tt_2d_object *m_lap = NULL;
+			tt_2d_object *m_lap_time = NULL;
+
 
 			tt_2d_texture *m_place_tex = NULL;
 			tt_2d_texture *m_speed_tex = NULL;
+			tt_2d_texture *m_lap_tex = NULL;
+			tt_2d_texture *m_lap_time_tex = NULL;
+
 		public:
 			ui_panel();
 			~ui_panel();

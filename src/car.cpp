@@ -49,6 +49,8 @@ void crg::car::update() {
 	m_pos = tt_math_vec3_add(&m_pos, &pos_delta);
 	tt_3d_object_set_position(m_obj, &m_pos);
 
+	m_current_lap_time += tt_time_current_frame_s();
+
 	m_acc.x = 0.0f;
 	m_acc.y = 0.0f;
 	m_acc.z = 0.0f;
