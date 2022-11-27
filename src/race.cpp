@@ -6,7 +6,7 @@ static std::vector<tt_vec3> race_checkpoints;
 static void _init_checkpoints();
 
 
-crg::race::race(uint32_t number_of_laps)
+crg::race::race()
 {
 	build_checkpoint_cubes();
 }
@@ -14,9 +14,43 @@ crg::race::race(uint32_t number_of_laps)
 crg::race::~race()
 {}
 
+void crg::race::update()
+{
+	// Check collision between participants and next checkpoint.
+	for (auto& participant: m_participants) {
+		auto next_checkpoint{
+			m_checkpoints[participant->m_next_checkpoint]};
+		auto pobj{participant->get_3d_object()};
+		if(tt_3d_object_colliding_aabb(pobj, next_checkpoint)) {
+			if (participant->m_next_checkpoint == 0) {
+				// Just completed a lap.
+				participant->m_current_lap++;
+			}
+
+			if (participant->m_next_checkpoint == m_checkpoints.size() - 1) {
+				participant->m_next_checkpoint = 0;
+			} else {
+				participant->m_next_checkpoint++;
+			}
+			participant->m_total_checkpoints++;
+		}
+	}
+
+	for (int i = 0; i < m_participants.size(); ++i) {
+		m_participants[i]->m_place = 1;
+		uint32_t total_i = m_participants[i]->m_total_checkpoints;
+		for (int j = 0; j < m_participants.size(); ++j) {
+			uint32_t total_j = m_participants[j]->m_total_checkpoints;
+			if (total_j > total_i) {
+				m_participants[i]->m_place++;
+			}
+		}
+	}
+}
+
 void crg::race::add_participant(crg::car* car)
 {
-
+	m_participants.push_back(car);
 }
 
 void crg::race::build_checkpoint_cubes()
@@ -50,18 +84,15 @@ void crg::race::build_checkpoint_cubes()
 
 		// Create collision cube.
 		tt_3d_object *cube_obj = tt_3d_object_new();
-		tt_vec3 scale = {total_length, 1.0f, 25.0f};
+		tt_vec3 scale = {5.0f, 1.0f, 100.0f};
 		tt_vec3 rot_axis = {0.0f, 1.0f, 0.0f};
 		tt_3d_object_make_cube(cube_obj);
 		tt_3d_object_scale(cube_obj, &scale);
 		tt_3d_object_set_position(cube_obj, &middle_point);
 		tt_3d_object_rotate(cube_obj, &rot_axis, angle);
-		tt_3d_object_back_face_culling(cube_obj, false); //the model looks weird otherwise
+		tt_3d_object_back_face_culling(cube_obj, false);
+		tt_3d_object_make_invisible(cube_obj, true);
 		m_checkpoints.emplace_back(cube_obj);
-
-		//printf("curr_point: %.02f, %.02f, %.02f\n", curr_point->x, curr_point->y, curr_point->z);
-		//printf("next_point: %.02f, %.02f, %.02f\n", next_point->x, next_point->y, next_point->z);
-		printf("%d\n", i);
 	}
 }
 

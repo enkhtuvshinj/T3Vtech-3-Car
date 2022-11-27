@@ -64,9 +64,7 @@ namespace crg
 			tt_vec3 m_acc = {0.0f, 0.0f, 0.0f};
 			tt_vec3 m_rot = {0.0f, 0.0f, 0.0f};
 			tt_vec3 m_dir = {0.0f, 0.0f, -1.0f}; //initial orientation
-			unsigned int m_current_lap = 0;
 			float m_current_lap_time = 0.0f;
-			unsigned int m_place;
 			void _update_player();
 			void _update_npc();
 
@@ -88,6 +86,10 @@ namespace crg
 			void set_at_starting_position(crg::track& track);
 			void colliding_with_car(crg::car& car);
 			void colliding_with_track(crg::track& track);
+			uint32_t m_next_checkpoint{0};
+			uint32_t m_total_checkpoints{0};
+			unsigned int m_current_lap = 0;
+			unsigned int m_place;
 	};
 
     // Guide cube for the NPC to reach in a straight line.
@@ -133,13 +135,15 @@ namespace crg
 		private:
 			bool m_has_started{false};
 			std::vector<tt_3d_object*> m_checkpoints;
+			std::vector<car*> m_participants;
 
 			void build_checkpoint_cubes();
 		public:
-			race(uint32_t number_of_laps);
+			race();
 			~race();
 
 			void add_participant(car* car_entity);
+			void update();
 	};
 }
 

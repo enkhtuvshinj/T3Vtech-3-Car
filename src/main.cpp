@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 
 	crg::assets assets;
 	crg::track track(assets);
-	crg::race race(2);
+	crg::race game_race;
 
 	//create NPC cars
 	std::vector<crg::car> car;
@@ -25,6 +25,10 @@ int main(int argc, char *argv[])
 	crg::car tmp_car(NUM_NPC+1, true, assets);
 	tmp_car.set_at_starting_position(track);
 	car.emplace_back(tmp_car);
+
+	for (int i = 0; i < car.size(); ++i) {
+		game_race.add_participant(&car[i]);
+	}
 
 	//skybox
 	tt_3d_object *sky = NULL;
@@ -61,6 +65,7 @@ int main(int argc, char *argv[])
 		tt_3d_object_set_position(sky, &pos);
 
 		ui.update(car);
+		game_race.update();
 		tt_new_frame();
 	}
 
