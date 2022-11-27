@@ -252,12 +252,15 @@ void crg::car::get_position(tt_vec3* pos_out) {
     pos_out->z = m_pos.z;
 }
 
-void crg::car::set_at_starting_position(crg::track& track)
+void crg::car::get_direction(tt_vec3* dir_out) {
+    dir_out->x = m_dir.x;
+    dir_out->y = m_dir.y;
+    dir_out->z = m_dir.z;
+}
+
+void crg::car::set_at_starting_position(tt_vec3* start_pos)
 {
-	m_pos = track.get_finish_pos();
-	m_pos.z += m_place * 15.0f;
-	m_pos.x += m_place%2 * 10.0f;
-	m_pos.x -= 12.5f;
+	m_pos = *start_pos;
 	tt_3d_object_set_position(m_obj, &m_pos);
 }
 

@@ -5,7 +5,10 @@
 #include <fstream>
 #include <string>
 
-#define MAX_LAP 5
+#define MAX_LAP 2
+#define INTRO_STATE 1
+#define PLAY_STATE 2
+#define OUTRO_STATE 3
 
 namespace crg
 {
@@ -77,6 +80,7 @@ namespace crg
 			void update();
 
 			void get_position(tt_vec3* pos_out);
+			void get_direction(tt_vec3* dir_out);
 			unsigned int get_place() {return m_place; };
 			tt_3d_object* get_3d_object() {return m_obj;};
 			tt_vec3 get_vel() {return m_vel;};
@@ -85,7 +89,7 @@ namespace crg
 			unsigned int get_current_lap() {return m_current_lap;};
 			float get_current_lap_time() {return m_current_lap_time;};
 
-			void set_at_starting_position(crg::track& track);
+			void set_at_starting_position(tt_vec3* start_pos);
 			void colliding_with_car(crg::car& car);
 			void colliding_with_track(crg::track& track);
 			uint32_t m_next_checkpoint{0};
@@ -111,6 +115,7 @@ namespace crg
 	class ui_panel
 	{
 		private:
+			tt_font *m_font_huge = NULL;
 			tt_font *m_font_big = NULL;
 			tt_font *m_font_mid = NULL;
 			tt_font *m_font_small = NULL;
@@ -119,15 +124,19 @@ namespace crg
 			tt_2d_object *m_speed = NULL;
 			tt_2d_object *m_lap = NULL;
 			tt_2d_object *m_lap_time = NULL;
+			tt_2d_object *m_start = NULL;
 
 
 			tt_2d_texture *m_place_tex = NULL;
 			tt_2d_texture *m_speed_tex = NULL;
 			tt_2d_texture *m_lap_tex = NULL;
 			tt_2d_texture *m_lap_time_tex = NULL;
+			tt_2d_texture *m_start_tex = NULL;
+
+			uint32_t* m_game_state;
 
 		public:
-			ui_panel();
+			ui_panel(uint32_t* game_state);
 			~ui_panel();
 			void update(std::vector<crg::car>& car);
 	};
@@ -136,12 +145,13 @@ namespace crg
 	{
 		private:
 			bool m_has_started{false};
+			uint32_t* m_game_state;
 			std::vector<tt_3d_object*> m_checkpoints;
 			std::vector<car*> m_participants;
 
 			void build_checkpoint_cubes();
 		public:
-			race();
+			race(uint32_t* game_state);
 			~race();
 
 			void add_participant(car* car_entity);

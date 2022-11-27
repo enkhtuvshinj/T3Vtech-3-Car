@@ -6,8 +6,9 @@ static std::vector<tt_vec3> race_checkpoints;
 static void _init_checkpoints();
 
 
-crg::race::race()
+crg::race::race(uint32_t* game_state)
 {
+	m_game_state = game_state;
 	build_checkpoint_cubes();
 }
 
@@ -33,6 +34,9 @@ void crg::race::update()
 				participant->m_next_checkpoint++;
 			}
 			participant->m_total_checkpoints++;
+		}
+		if (participant->m_is_player && participant->m_current_lap == MAX_LAP + 1) {
+			*m_game_state = OUTRO_STATE;
 		}
 	}
 
