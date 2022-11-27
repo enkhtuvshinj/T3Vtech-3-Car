@@ -177,10 +177,73 @@ void crg::car::update() {
 		cam_pos.y += 2.0f;
 		tt_camera_set_position(&cam_pos);
 	}
+	// movement of other cars
+	else {
+		_update_npc();
+	}
 
 	//friction
 	tt_vec3 friction = tt_math_vec3_mul_float(&m_vel, CAR_FRICTION);
 	m_acc = tt_math_vec3_add(&m_acc, &friction);
+}
+
+
+void crg::car::turning_to_right()	{
+	m_dir.x *= -1.0f;
+	tt_vec3 rot_axis = {0.0f, 1.0f, 0.0f};
+	float radians = -CAR_ROT * tt_time_current_frame_s();
+	m_dir = tt_math_vec3_rotate(
+			&rot_axis, 
+			radians,
+			&m_dir);
+	tt_3d_object_rotate(m_obj, &rot_axis, radians);
+	m_dir.x *= -1.0f;
+}
+
+void crg::car::turning_to_left()	{
+	m_dir.x *= -1.0f;
+	tt_vec3 rot_axis = {0.0f, 1.0f, 0.0f};
+	float radians = CAR_ROT * tt_time_current_frame_s();
+	m_dir = tt_math_vec3_rotate(
+			&rot_axis, 
+			radians,
+			&m_dir);
+	tt_3d_object_rotate(m_obj, &rot_axis, radians);
+	m_dir.x *= -1.0f;	
+}
+
+void crg::car::_update_npc() {
+	m_acc = tt_math_vec3_normalize(&m_dir);
+	m_acc = tt_math_vec3_mul_float(&m_acc, 20);
+
+	// To right
+	if((-130.0f > m_pos.x && m_pos.x >-160.0f &&
+	    -150.0f > m_pos.z && m_pos.z >-210.0f) ||
+		(80.0f > m_pos.x && m_pos.x >70.0f &&
+	    -130.0f > m_pos.z && m_pos.z >-235.0f) || 
+		(125.0f > m_pos.x && m_pos.x >120.0f &&
+	    -130.0f > m_pos.z && m_pos.z >-235.0f) ||
+		(170.0f > m_pos.x && m_pos.x >140.0f &&
+	    -130.0f > m_pos.z && m_pos.z >-235.0f) || 
+		(200.0f > m_pos.x && m_pos.x >185.0f &&
+	    -100.0f > m_pos.z && m_pos.z >-230.0f) || 
+ 
+ 		(300.0f > m_pos.x && m_pos.x >200.0f &&
+	     150.0f > m_pos.z && m_pos.z >10.0f) || 
+		(55.0f > m_pos.x && m_pos.x >46.0f &&
+	     209.0f > m_pos.z && m_pos.z >207.0f) || 
+		(-81.0f > m_pos.x && m_pos.x >130.0f &&
+	    176.0f > m_pos.z && m_pos.z >153.0f)
+		)
+	{
+		turning_to_right();
+	}
+	// To left
+	if(130.0f > m_pos.x && m_pos.x >80.0f &&
+	  -20.0f > m_pos.z && m_pos.z >-80.0f)
+	{
+		turning_to_left();
+	}
 }
 
 void crg::car::get_position(tt_vec3* pos_out) {

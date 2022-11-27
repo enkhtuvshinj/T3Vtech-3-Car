@@ -1,0 +1,13 @@
+[INFO] initialize T3Vtech-3 engine
+[INFO] platform is Linux
+[INFO] SDL2 initialized
+[INFO] desktop resolution is 1920x1200 at 60Hz
+[INFO] SDL_GetNumVideoDisplays(): 2
+[INFO] SDL2 window created
+[INFO] game resolution is 320x200
+[INFO] using OpenGL 4.3
+[INFO] SDL2 OpenGL context created
+[INFO] GLEW initialized
+[INFO] SDL2_ttf initialized
+[INFO] creating a vertex shader
+[ERROR] while reading a vertex shader from shaders/std_2d_vertex.glsl

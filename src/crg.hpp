@@ -67,6 +67,8 @@ namespace crg
 			float m_current_lap_time = 0.0f;
 			void _update_player();
 			void _update_npc();
+			void turning_to_left();
+			void turning_to_right();
 
 		public:
 			bool m_is_player;
